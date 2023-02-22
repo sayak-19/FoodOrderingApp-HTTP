@@ -26,6 +26,8 @@ const cartReducer = (state, action) => {
     }
 
     return { items: temp, totalAmount: updatedAmount };
+  } else if (action.type === "REMOVE_ALL_ITEMS") {
+    return { items: [], totalAmount: 0 };
   }
   return {
     items: [],
@@ -45,12 +47,16 @@ function CartContextProvider(props) {
   const removeItemFromCartHandler = (id) => {
     dispatchCartAction({ type: "REMOVE_ITEM", id: id });
   };
+  const removeAllItemsFromCartHandler = () => {
+    dispatchCartAction({ type: "REMOVE_ALL_ITEMS" });
+  };
 
   const cartContext = {
     items: cartState.items,
     amount: cartState.totalAmount,
     addItem: addItemToCartHandler,
     removeItem: removeItemFromCartHandler,
+    removeAllItems: removeAllItemsFromCartHandler,
   };
 
   return (
